@@ -18,7 +18,11 @@ app.get("/", (req, res) => {
 app.get("/send", (req, res) => {
     parseAndWrite(req.query);
     res.render("submit")
+})
+
+app.get("/load", (req, res) => {
     runScript();
+    res.render("load")
 })
 
 app.get('/download', function (req, res) {
@@ -30,6 +34,7 @@ app.get('/render-forms', (req, res) => {
     const numForms = req.query.count;
     res.render('forms', { numForms, defaultValues });
 });
+
 
 app.listen(3000);
 console.log("Listening on localhost:3000")
@@ -64,6 +69,22 @@ const runScript = () => {
     const pythonProcess = spawn(command, ['main.py']);
 
     pythonProcess.stdout.on('data', (data) => {
+        // Handle standard output
         console.log(data.toString());
-    });
+      });
+      
+      pythonProcess.stderr.on('data', (data) => {
+        // Handle error output
+        console.error(data.toString());
+      });
+      
+      pythonProcess.on('error', (error) => {
+        // Handle process error
+        console.error(error);
+      });
+      
+      pythonProcess.on('close', (code) => {
+        // Handle process close
+        console.log(`Python script exited with code ${code}`);
+      });
 }

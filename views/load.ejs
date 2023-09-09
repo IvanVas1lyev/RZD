@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Размещение грузов</title>
     <link href="/public/assets/styles.css" rel="stylesheet" type="text/css" />
+    <link href="/public/assets/result.css" rel="stylesheet" type="text/css" />
     <link rel="icon" type="image/x-icon" href="/public/assets/favicon.ico">
+    <title>Результат</title>
+    
 </head>
-
 
 <body>
     <header>
@@ -22,47 +23,16 @@
             </div>
         </a>
     </header>
-    <form method="GET" action="/send" id="form">
-        <div class="form-wrapper">
-            <div class="form">
-                <label>
-                    Название
-                    <input name="name" placeholder="Введите название" />
-                </label>
-                <label>
-                    Число уникальных грузов
-                    <input name="cargoCount" value="4" id="numForms" type="number" min="1" />
-                </label>
-                <button>Рассчитать</button>
+    <div class="form">
+        <div class="wrapper">
+            <h2>Через несколько секунд запустится окно с результатами вычисления. После этого можно будет скачать отчет</h2>
+            <div class="buttons">
+                <a href="/" class="link">Вернуться назад</a>
+                <a href="/download" class="link">Скачать отчет</a>
             </div>
         </div>
-        <div class="form-container"></div>
-    </form>
+    </div>
 
 </body>
-<script>
-
-
-    const count = document.getElementById("numForms");
-    const form = document.querySelector(".form-container");
-
-    const renderForms = (value) =>
-        fetch(`/render-forms?count=${value}`, {
-            method: "GET",
-        })
-            .then(res => res.text())
-            .then(html => {
-                form.innerHTML = html;
-            });
-
-    renderForms(count.value);
-    count.addEventListener("input", (event) => {
-        const value = event.target.value;
-        if (value)
-            renderForms(value)
-    });
-
-
-</script>
 
 </html>

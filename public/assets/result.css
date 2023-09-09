@@ -1,0 +1,39 @@
+.link {
+    padding: 0 40px;
+    height: 48px;
+    line-height: 48px;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+    font-weight: 500;
+
+    font-size: 20px;
+    margin-top: 16px;
+    text-decoration: none;
+}
+
+.link:hover {
+    background-color: #e21a1a;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+}
+
+.buttons {
+    display: flex;
+    gap: 8px;
+    height: 60px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    min-height: calc(100vh - 57px);
+}
+
+.wrapper {
+    background-color: #fff;
+    padding: 40px;
+    width: 100%;
+}
