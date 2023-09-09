@@ -6,6 +6,7 @@ import open from 'open';
 const app = express();
 
 app.set('view engine', 'ejs');
+app.use('/public', express.static('public'));
 
 const defaultValues = [
     {
@@ -94,11 +95,6 @@ const runScript = () => {
         console.log(`${stdout}`);
     }
 
-    // const isWin = process.platform === "win32";
-    // if (isWin) {
-    //     exec('python main.py', handler);
-    // }
-    // else exec('python3 main.py', handler);
     const command = process.platform === "win32" ? 'python' : 'python3';
     const pythonProcess = spawn(command, ['main.py']);
 
