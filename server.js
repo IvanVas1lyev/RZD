@@ -43,11 +43,15 @@ app.get("/", (req, res) => {
 });
 
 app.get("/send", (req, res) => {
-
     parseAndWrite(req.query);
     res.render("submit")
     runScript();
 })
+
+app.get('/download', function(req, res){
+    const file = `./example.docx`;
+    res.download(file); // Set disposition and send it.
+  });
 
 app.listen(3000);
 console.log("Listening on localhost:3000")
