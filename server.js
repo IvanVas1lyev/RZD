@@ -2,14 +2,44 @@ import express from 'express';
 import fs from 'fs';
 import { exec } from "child_process";
 import open from 'open';
-import { parse } from 'path';
 
 const app = express();
 
 app.set('view engine', 'ejs');
 
+const defaultValues = [
+    {
+        "length": "150",
+        "width": "100",
+        "height": "40",
+        "count": "3",
+        "weight": "400"
+    },
+    {
+        "length": "150",
+        "width": "100",
+        "height": "40",
+        "count": "3",
+        "weight": "555555"
+    },
+    {
+        "length": "150",
+        "width": "100",
+        "height": "40",
+        "count": "3",
+        "weight": "406666660"
+    },
+    {
+        "length": "150",
+        "width": "100",
+        "height": "40",
+        "count": "3",
+        "weight": "400"
+    },
+]
+
 app.get("/", (req, res) => {
-    res.render("index");
+    res.render("index", { defaultValues });
 });
 
 app.get("/send", (req, res) => {
@@ -30,12 +60,12 @@ const parseAndWrite = (query) => {
         const match = key.match(/(\D*)(\d*)/); // This regex separates the base name and the index
         const base = match[1];
         const index = match[2];
-    
+
         if (base && index !== "") { // If base name and index are valid
             if (!newData[index]) { // If this index does not exist in new data, create it
                 newData[index] = {};
             }
-    
+
             newData[index][base] = query[key]; // Add the base name and its value to the new data
         }
     });
@@ -47,7 +77,7 @@ const parseAndWrite = (query) => {
 }
 
 
-const runScript = async () => {
+const runScript = () => {
     const handler = (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
@@ -61,8 +91,9 @@ const runScript = async () => {
     }
 
     const isWin = process.platform === "win32";
-    if (isWin)
+    if (isWin) {
         exec('python main.py', handler);
+    }
     else exec('python3 main.py', handler);
 }
 
