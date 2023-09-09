@@ -28,7 +28,8 @@ def main():
             break
 
     if not len(correct_permutation_params):
-        return "Данные грузы невозможно разместить на платформе"
+        print("Данные грузы невозможно разместить на платформе")
+        return -1
 
     pygame.init()
     display = (1200, 600)
