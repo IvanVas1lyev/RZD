@@ -1,0 +1,68 @@
+import express from 'express';
+import fs from 'fs';
+import { exec } from "child_process";
+import open from 'open';
+import { parse } from 'path';
+
+const app = express();
+
+app.set('view engine', 'ejs');
+
+app.get("/", (req, res) => {
+    res.render("index");
+});
+
+app.get("/send", (req, res) => {
+
+    parseAndWrite(req.query);
+    res.render("submit")
+    runScript();
+})
+
+app.listen(3000);
+console.log("Listening on localhost:3000")
+open('http://localhost:3000');
+
+const parseAndWrite = (query) => {
+    const newData = {};
+
+    Object.keys(query).forEach((key) => {
+        const match = key.match(/(\D*)(\d*)/); // This regex separates the base name and the index
+        const base = match[1];
+        const index = match[2];
+    
+        if (base && index !== "") { // If base name and index are valid
+            if (!newData[index]) { // If this index does not exist in new data, create it
+                newData[index] = {};
+            }
+    
+            newData[index][base] = query[key]; // Add the base name and its value to the new data
+        }
+    });
+
+    fs.writeFile("data.json", JSON.stringify(newData), (err) => {
+        if (err)
+            console.log(err);
+    });
+}
+
+
+const runScript = async () => {
+    const handler = (error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
+        }
+        console.log(`${stdout}`);
+    }
+
+    const isWin = process.platform === "win32";
+    if (isWin)
+        exec('python main.py', handler);
+    else exec('python3 main.py', handler);
+}
+
