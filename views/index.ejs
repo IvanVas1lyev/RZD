@@ -31,7 +31,7 @@
                 </label>
                 <label>
                     Число уникальных грузов
-                    <input name="n" value="4" id="numForms" type="number" min="1"/>
+                    <input name="cargoCount" value="4" id="numForms" type="number" min="1" />
                 </label>
                 <button>Рассчитать</button>
             </div>
@@ -58,7 +58,8 @@
     renderForms(count.value);
     count.addEventListener("input", (event) => {
         const value = event.target.value;
-        renderForms(value)
+        if (value)
+            renderForms(value)
     });
 
 

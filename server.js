@@ -36,7 +36,7 @@ console.log("Listening on localhost:3000")
 open('http://localhost:3000');
 
 const parseAndWrite = (query) => {
-    const newData = {};
+    const newData = { name: query.name, cargoCount: query.cargoCount };
 
     Object.keys(query).forEach((key) => {
         const match = key.match(/(\D*)(\d*)/); // This regex separates the base name and the index
@@ -60,18 +60,6 @@ const parseAndWrite = (query) => {
 
 
 const runScript = () => {
-    const handler = (error, stdout, stderr) => {
-        if (error) {
-            console.log(`error: ${error.message}`);
-            return;
-        }
-        if (stderr) {
-            console.log(`stderr: ${stderr}`);
-            return;
-        }
-        console.log(`${stdout}`);
-    }
-
     const command = process.platform === "win32" ? 'python' : 'python3';
     const pythonProcess = spawn(command, ['main.py']);
 
