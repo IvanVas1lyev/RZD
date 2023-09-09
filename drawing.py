@@ -239,4 +239,3 @@ def draw_shipments(correct_permutation_params: list) -> None:
         glVertex3fv((- width / 2, 0.2 + height, end))
         glVertex3fv((width / 2, 0.2, end))
         glEnd()
-

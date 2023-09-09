@@ -3,12 +3,12 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
-import numpy as np
 import itertools
 import json
 
 from drawing import *
 from check_functions import *
+from generate_docx import *
 
 
 def read_data() -> list:
@@ -31,21 +31,24 @@ def main():
     name = 'efvef'  # input("Название груза: ")  # название груза
     params_list = read_data()
     shipments_numbers = []
+    res = []
 
     for i in range(unique_count):
         shipments_numbers += params_list[i][3] * [i + 1]
 
-    correct_permutation_params = []
-
     for permutation in itertools.permutations(shipments_numbers):
-        correct_permutation_params = check_shipments_order(permutation, params_list)
+        res = check_shipments_order(permutation, params_list)
 
-        if len(correct_permutation_params):
+        if len(res):
             break
 
-    if not len(correct_permutation_params):
+    if not len(res):
         print("Данные грузы невозможно разместить на платформе")
         return -1
+
+    generate_doc(params_list, res[1], name)
+
+    correct_permutation_params = res[0]
 
     pygame.init()
     display = (1200, 600)

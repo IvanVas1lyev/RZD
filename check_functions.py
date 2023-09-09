@@ -29,7 +29,7 @@ def check_rotate_shipments_order(permutation: list, params_list: list) -> list:
     return check_shipments_order(permutation, params_list)
 
 
-def check_all_forces(start: float, end: float, arr_for_check: list) -> bool:
+def check_all_forces(start: float, end: float, arr_for_check: list) -> bool | list:
     """
     calculates and tests forces
     :param start: start of series of shipments
@@ -134,8 +134,10 @@ def check_all_forces(start: float, end: float, arr_for_check: list) -> bool:
 
         my_arr.append([round(Fpr, 2), round(Fp, 2), round(Fv, 2), round(Wv, 2), round(Ftrpr, 2), round(Ftrp, 2),
                        round(delta_Fpr, 2), round(delta_Fp, 2), round(Npr, 2), round(Np, 2)])
+    if not flag:
+        return False
 
-    return flag
+    return [l1, l2, h1, h2, s, my_arr]
 
 
 def check_shipments_order(permutation: list, params_list: list) -> list:
@@ -171,4 +173,4 @@ def check_shipments_order(permutation: list, params_list: list) -> list:
         start += elem[0] + MIN_DIST
         final_arr_with_coordinates.append(new_elem)
 
-    return final_arr_with_coordinates
+    return [final_arr_with_coordinates, flag]
