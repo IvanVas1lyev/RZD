@@ -1,0 +1,27 @@
+<% for(let i=1; i <= numForms; i++) { %>
+    <div class="form-wrapper">
+        <h2>Груз <%= i %></h2>
+        <div class="form">
+            <label>
+                Длина
+                <input name="length<%= i %>" required value="<%= defaultValues[i-1]?.length ?? 3650 %>" type="number" />
+            </label>
+            <label>
+                Ширина
+                <input name="width<%= i %>" required value="<%= defaultValues[i-1]?.width ?? 3320 %>" type="number" />
+            </label>
+            <label>
+                Высота
+                <input name="height<%= i %>" required value="<%= defaultValues[i-1]?.height ?? 1500 %>" type="number" />
+            </label>
+            <label>
+                Количество
+                <input name="count<%= i %>" required value="<%= defaultValues[i-1]?.count ?? 1 %>" type="number" />
+            </label>
+            <label>
+                Вес одной единицы
+                <input name="weight<%= i %>" required value="<%= defaultValues[i-1]?.weight ?? 6670 %>" type="number" />
+            </label>
+        </div>
+    </div>
+    <% } %>

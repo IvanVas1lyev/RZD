@@ -46,6 +46,12 @@ form {
     padding: 32px 40px 0;
 }
 
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
 .form-wrapper {
     background: #fff;
     width: 100%;

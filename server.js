@@ -2,45 +2,17 @@ import express from 'express';
 import fs from 'fs';
 import { spawn } from "child_process";
 import open from 'open';
+import { defaultValues } from './defaultValues.js';
 
 const app = express();
 
 app.set('view engine', 'ejs');
 app.use('/public', express.static('public'));
 
-const defaultValues = [
-    {
-        "length": "3650",
-        "width": "3320",
-        "height": "1500",
-        "count": "1",
-        "weight": "6670"
-    },
-    {
-        "length": "3870",
-        "width": "2890",
-        "height": "1020",
-        "count": "1",
-        "weight": "4085"
-    },
-    {
-        "length": "1080",
-        "width": "1580",
-        "height": "390",
-        "count": "1",
-        "weight": "395"
-    },
-    {
-        "length": "4100",
-        "width": "1720",
-        "height": "1150",
-        "count": "1",
-        "weight": "1865"
-    }
-]
+
 
 app.get("/", (req, res) => {
-    res.render("index", { defaultValues });
+    res.render("index");
 });
 
 app.get("/send", (req, res) => {
@@ -49,10 +21,15 @@ app.get("/send", (req, res) => {
     runScript();
 })
 
-app.get('/download', function(req, res){
+app.get('/download', function (req, res) {
     const file = `./Расчетно-пояснительная записка.docx`;
     res.download(file); // Set disposition and send it.
-  });
+});
+
+app.get('/render-forms', (req, res) => {
+    const numForms = req.query.count;
+    res.render('forms', { numForms, defaultValues });
+});
 
 app.listen(3000);
 console.log("Listening on localhost:3000")

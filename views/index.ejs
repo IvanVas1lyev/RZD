@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Размещение грузов</title>
     <link href="/public/assets/styles.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/x-icon" href="/public/assets/favicon.ico">
 </head>
 
 
@@ -21,7 +22,7 @@
             </div>
         </a>
     </header>
-    <form method="GET" action="/send">
+    <form method="GET" action="/send" id="form">
         <div class="form-wrapper">
             <div class="form">
                 <label>
@@ -30,41 +31,37 @@
                 </label>
                 <label>
                     Число уникальных грузов
-                    <input name="n" value="4" id="numForms" type="number" disabled />
+                    <input name="n" value="4" id="numForms" type="number" min="1"/>
                 </label>
                 <button>Рассчитать</button>
             </div>
         </div>
-
-        <% for(let i=1; i <= 4; i++) { %>
-            <div class="form-wrapper">
-                <h2>Груз <%= i %></h2>
-
-                <div class="form">
-                    <label>
-                        Длина
-                        <input name="length<%= i %>" required value="<%= defaultValues[i-1].length %>" type="number" />
-                    </label>
-                    <label>
-                        Ширина
-                        <input name="width<%= i %>" required value="<%= defaultValues[i-1].width %>" type="number" />
-                    </label>
-                    <label>
-                        Высота
-                        <input name="height<%= i %>" required value="<%= defaultValues[i-1].height %>" type="number" />
-                    </label>
-                    <label>
-                        Количество
-                        <input name="count<%= i %>" required value="<%= defaultValues[i-1].count %>" type="number" />
-                    </label>
-                    <label>
-                        Вес одной единицы
-                        <input name="weight<%= i %>" required value="<%= defaultValues[i-1].weight %>" type="number" />
-                    </label>
-                </div>
-            </div>
-            <% } %>
+        <div class="form-container"></div>
     </form>
 
 </body>
+<script>
+
+
+    const count = document.getElementById("numForms");
+    const form = document.querySelector(".form-container");
+
+    const renderForms = (value) =>
+        fetch(`/render-forms?count=${value}`, {
+            method: "GET",
+        })
+            .then(res => res.text())
+            .then(html => {
+                form.innerHTML = html;
+            });
+
+    renderForms(count.value);
+    count.addEventListener("input", (event) => {
+        const value = event.target.value;
+        renderForms(value)
+    });
+
+
+</script>
+
 </html>
