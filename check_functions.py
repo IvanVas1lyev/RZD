@@ -96,6 +96,7 @@ def check_all_forces(start: float, end: float, arr_for_check: list) -> bool:
 
     # Силы действующие на i-й груз
     my_arr = []
+    print('----------------------')
     for i in range(length):
         # 1 Продольная инерционная сила
         Apr = a22 - (sum(rzhd_df['Вес 1 ед. (кг)'] / 1000)) * (a22 - a94) / 72
@@ -128,9 +129,11 @@ def check_all_forces(start: float, end: float, arr_for_check: list) -> bool:
         # 9 Коэффициент запаса устойчивости от опрокидывания поперек вагона
         Np = (rzhd_df['Вес 1 ед. (кг)'][i] / 1000 * min(rzhd_df['Ширина'][i] / 2, 1435)) / (
                     Fp * (rzhd_df['Высота'][i] / 2 - Hpy) + Wv * (rzhd_df['Высота'][i] / 2 - Hpy))
+
         if (Npr <= 1.25) or (Np <= 1.25):
             flag = False
-
+        print(Npr)
+        print(Np)
         my_arr.append([round(Fpr, 2), round(Fp, 2), round(Fv, 2), round(Wv, 2), round(Ftrpr, 2), round(Ftrp, 2),
                        round(delta_Fpr, 2), round(delta_Fp, 2), round(Npr, 2), round(Np, 2)])
 

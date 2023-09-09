@@ -29,11 +29,8 @@ def main():
     # params_list = [[int(i) for i in input().split()] for _ in range(unique_count)]  # длина, ширина, высота, кол-во, вес 1 шт
     params_list = read_data()
     shipments_numbers = []
-    print(params_list)
 
     for i in range(unique_count):
-        print(i)
-        print(params_list[i][3])
         shipments_numbers += params_list[i][3] * [i + 1]
 
     correct_permutation_params = []
