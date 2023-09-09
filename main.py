@@ -5,18 +5,35 @@ from OpenGL.GLU import *
 
 import numpy as np
 import itertools
+import json
 
 from drawing import *
 from check_functions import *
 
 
+def read_data():
+    f = open("data.json", "r")
+    raw = f.read()
+    data = json.loads(raw)
+    arr = []
+
+    for value in data.values():
+        arr.append([float(value['length']), float(value['width']), float(value['height']), int(value['count']), float(value['weight'])])
+
+    return arr
+
+
 def main():
-    unique_count = int(input())  # количество грузов
-    name = input("Название груза: ")  # название груза
-    params_list = [[int(i) for i in input().split()] for _ in range(unique_count)]  # длина, ширина, высота, кол-во, вес 1 шт
+    unique_count = 4  # int(input())  # количество грузов
+    name = 'efvef'  # input("Название груза: ")  # название груза
+    # params_list = [[int(i) for i in input().split()] for _ in range(unique_count)]  # длина, ширина, высота, кол-во, вес 1 шт
+    params_list = read_data()
     shipments_numbers = []
+    print(params_list)
 
     for i in range(unique_count):
+        print(i)
+        print(params_list[i][3])
         shipments_numbers += params_list[i][3] * [i + 1]
 
     correct_permutation_params = []
