@@ -1,6 +1,6 @@
 import express from 'express';
 import fs from 'fs';
-import { exec } from "child_process";
+import { spawn } from "child_process";
 import open from 'open';
 
 const app = express();
@@ -90,10 +90,16 @@ const runScript = () => {
         console.log(`${stdout}`);
     }
 
-    const isWin = process.platform === "win32";
-    if (isWin) {
-        exec('python main.py', handler);
-    }
-    else exec('python3 main.py', handler);
+    // const isWin = process.platform === "win32";
+    // if (isWin) {
+    //     exec('python main.py', handler);
+    // }
+    // else exec('python3 main.py', handler);
+    const command = process.platform === "win32" ? 'python' : 'python3';
+    const pythonProcess = spawn(command, ['main.py']);
+
+    pythonProcess.stdout.on('data', (data) => {
+        console.log(data.toString());
+    });
 }
 
