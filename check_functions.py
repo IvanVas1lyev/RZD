@@ -37,7 +37,6 @@ def check_all_forces(start: float, end: float, arr_for_check: list) -> bool:
     :param arr_for_check: list of ordered shipments params
     :return: flag
     """
-    print(arr_for_check)
     length = len(arr_for_check)
     flag = True
 
@@ -96,7 +95,7 @@ def check_all_forces(start: float, end: float, arr_for_check: list) -> bool:
 
     # Силы действующие на i-й груз
     my_arr = []
-    print('----------------------')
+
     for i in range(length):
         # 1 Продольная инерционная сила
         Apr = a22 - (sum(rzhd_df['Вес 1 ед. (кг)'] / 1000)) * (a22 - a94) / 72
@@ -132,11 +131,9 @@ def check_all_forces(start: float, end: float, arr_for_check: list) -> bool:
 
         if (Npr <= 1.25) or (Np <= 1.25):
             flag = False
-        print(Npr)
-        print(Np)
+
         my_arr.append([round(Fpr, 2), round(Fp, 2), round(Fv, 2), round(Wv, 2), round(Ftrpr, 2), round(Ftrp, 2),
                        round(delta_Fpr, 2), round(delta_Fp, 2), round(Npr, 2), round(Np, 2)])
-
 
     return flag
 
@@ -150,7 +147,7 @@ def check_shipments_order(permutation: list, params_list: list) -> list:
     """
     summary_len = 0
     arr_for_check = []
-    final_arr = []
+    final_arr_with_coordinates = []
 
     for index in permutation:
         summary_len += params_list[index - 1][0]
@@ -172,7 +169,6 @@ def check_shipments_order(permutation: list, params_list: list) -> list:
     for elem in arr_for_check:
         new_elem = [start, start + elem[0], elem[1], elem[2]]
         start += elem[0] + MIN_DIST
-        final_arr.append(new_elem)
+        final_arr_with_coordinates.append(new_elem)
 
-    #return [[1000, 5000, 2000, 2000], [5500, 8000, 1500, 1700]]
-    return final_arr
+    return final_arr_with_coordinates

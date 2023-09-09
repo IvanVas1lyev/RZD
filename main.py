@@ -11,22 +11,24 @@ from drawing import *
 from check_functions import *
 
 
-def read_data():
+def read_data() -> list:
+    """
+    read data from inputs and convert to list of lists
+    """
     f = open("data.json", "r")
     raw = f.read()
-    data = json.loads(raw)
-    arr = []
+    data_dict = json.loads(raw)
+    data_arr = []
 
-    for value in data.values():
-        arr.append([float(value['length']), float(value['width']), float(value['height']), int(value['count']), float(value['weight'])])
+    for value in data_dict.values():
+        data_arr.append([float(value['length']), float(value['width']), float(value['height']), int(value['count']), float(value['weight'])])
 
-    return arr
+    return data_arr
 
 
 def main():
     unique_count = 4  # int(input())  # количество грузов
     name = 'efvef'  # input("Название груза: ")  # название груза
-    # params_list = [[int(i) for i in input().split()] for _ in range(unique_count)]  # длина, ширина, высота, кол-во, вес 1 шт
     params_list = read_data()
     shipments_numbers = []
 

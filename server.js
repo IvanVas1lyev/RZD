@@ -49,7 +49,7 @@ app.get("/send", (req, res) => {
 })
 
 app.get('/download', function(req, res){
-    const file = `./example.docx`;
+    const file = `./zapiska.docx`;
     res.download(file); // Set disposition and send it.
   });
 
