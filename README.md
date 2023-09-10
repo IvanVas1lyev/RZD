@@ -15,3 +15,5 @@ node server.js
 ```
 
 Сервер будет запущен на адресе `localhost:3000`
+
+Операционные системы - Windows, Linux, macOS

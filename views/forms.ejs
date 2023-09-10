@@ -4,23 +4,23 @@
         <div class="form">
             <label>
                 Длина
-                <input name="length<%= i %>" required value="<%= defaultValues[i-1]?.length ?? 3650 %>" type="number" />
+                <input class="form-input" name="length<%= i %>" placeholder="Введите длину" required value="<%= defaultValues[i-1]?.length ?? '' %>" type="number" />
             </label>
             <label>
                 Ширина
-                <input name="width<%= i %>" required value="<%= defaultValues[i-1]?.width ?? 3320 %>" type="number" />
+                <input class="form-input" name="width<%= i %>" placeholder="Введите ширину" required value="<%= defaultValues[i-1]?.width ?? ''  %>" type="number" />
             </label>
             <label>
                 Высота
-                <input name="height<%= i %>" required value="<%= defaultValues[i-1]?.height ?? 1500 %>" type="number" />
+                <input class="form-input" name="height<%= i %>" placeholder="Введите высоту" required value="<%= defaultValues[i-1]?.height ?? '' %>" type="number" />
             </label>
             <label>
                 Количество
-                <input name="count<%= i %>" required value="<%= defaultValues[i-1]?.count ?? 1 %>" type="number" />
+                <input class="form-input" name="count<%= i %>" placeholder="Введите количество" required value="<%= defaultValues[i-1]?.count ?? '' %>" type="number" />
             </label>
             <label>
                 Вес одной единицы
-                <input name="weight<%= i %>" required value="<%= defaultValues[i-1]?.weight ?? 6670 %>" type="number" />
+                <input class="form-input" name="weight<%= i %>" placeholder="Введите вес" required value="<%= defaultValues[i-1]?.weight ?? '' %>" type="number" />
             </label>
         </div>
     </div>

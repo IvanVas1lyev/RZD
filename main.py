@@ -20,16 +20,22 @@ def read_data() -> list:
     data_dict = json.loads(raw)
     data_arr = []
 
-    for value in data_dict.values():
-        data_arr.append([float(value['length']), float(value['width']), float(value['height']), int(value['count']), float(value['weight'])])
+    for key, value in data_dict.items():
+        if key != 'name' and key != 'cargoCount':
+            data_arr.append([float(value['length']), float(value['width']), float(value['height']), int(value['count']), float(value['weight'])])
+        if key == 'name':
+            data_arr.append(value)
 
     return data_arr
 
 
 def main():
-    unique_count = 4  # int(input())  # количество грузов
-    name = 'efvef'  # input("Название груза: ")  # название груза
     params_list = read_data()
+
+    name = params_list[-1]
+    params_list.pop()
+    unique_count = len(params_list)
+
     shipments_numbers = []
     res = []
 
@@ -43,7 +49,7 @@ def main():
             break
 
     if not len(res):
-        print("Данные грузы невозможно разместить на платформе")
+        print('Данные грузы невозможно разместить на платформе')
         return -1
 
     generate_doc(params_list, res[1], name)
@@ -51,10 +57,10 @@ def main():
     correct_permutation_params = res[0]
 
     pygame.init()
-    display = (1200, 600)
+    display = (1500, 900)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     gluPerspective(45, (display[0] / display[1]), 0.1, 52.0)
-    glTranslatef(0, -2, -15)
+    glTranslatef(0, -2.5, -20)
     glClearColor(background_color[0], background_color[1], background_color[2], 0.5)
 
     while True:
@@ -65,6 +71,8 @@ def main():
 
         glRotatef(1, 0, 1, 0)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+
+        draw_field(0, -0.6, 0)
 
         draw_wheel(1, -0.6, 3.5)
         draw_wheel(1, -0.6, 4.5)
@@ -81,9 +89,12 @@ def main():
 
         draw_platform()
 
+
         draw_shipments(correct_permutation_params)
 
+        pygame.display.set_caption(name)
         pygame.display.flip()
+
         pygame.time.wait(10)
 
 
